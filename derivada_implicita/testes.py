@@ -1,32 +1,24 @@
 from manim import *
 
-class DestacarTextoComRetangulo(Scene):
+class TransformarPartesEspecificas(Scene):
     def construct(self):
-        # Cria o texto
-        texto = Text("Texto Destacado")
+        # Cria uma equação inicial
+        eq_inicial = MathTex("a^2", "+", "b^2", "=", "c^2")
+        
+        # Cria a equação transformada
+        eq_transformada = MathTex("a^2", "=", "c^2", "-", "b^2")
 
-        # Cria o retângulo ao redor do texto
-        retangulo = Rectangle(
-            width=texto.width + 0.5,  # Adiciona algum espaço extra ao redor do texto
-            height=texto.height + 0.5,
-            color=BLUE,
-        )
+        # Posiciona a equação inicial no centro da tela
+        eq_inicial.move_to(ORIGIN)
         
-        # Posiciona o retângulo e o texto na tela
-        retangulo.move_to(texto.get_center())
-        texto.move_to(retangulo.get_center())
+        # Adiciona a equação inicial à cena
+        self.add(eq_inicial)
         
-        # Adiciona o texto e o retângulo à cena
-        self.add(retangulo, texto)
-
-        # Anima a escrita do texto
-        self.play(Write(texto))
-        
+        # Espera 1 segundo
         self.wait(1)
         
-        # Anima o destaque do retângulo
-        self.play(retangulo.animate.set_color(YELLOW))
-        self.wait(2)
+        # Anima a transformação da equação inicial na equação transformada
+        self.play(TransformMatchingTex(eq_inicial, eq_transformada))
         
-        # Opcional: Remove o retângulo e o texto da tela
-        self.play(FadeOut(retangulo), FadeOut(texto))
+        # Espera mais 2 segundos antes de encerrar a cena
+        self.wait(2)
